@@ -1,0 +1,91 @@
+[user]
+  name = hofzzy
+  email = hofzzy@gmail.com
+[core]
+  autocrlf = false
+  quotepath = false
+[color]
+  ui = auto
+[alias]
+  empty = commit --allow-empty -m 'first commit'
+  # status
+  s    = status
+  st   = status
+  # add
+  ad   = add
+  ada  = add .
+  adn  = add -N
+  adna = add -N .
+  adp  = add -p
+  # checkout
+  co   = checkout
+  cob  = checkout -b
+  # commit
+  cm   = commit
+  cmm  = commit -m
+  cma  = commit --amend
+  cmam = commit --amend -m
+  # push
+  pu   = push
+  puu  = !git push -u origin `git branch | grep \\* | cut -d' ' -f 2`
+  puf  = push -f
+  # pull
+  pl   = pull
+  # branch
+  br   = branch
+  brv  = branch -vv
+  brd  = branch -D
+  # reset
+  rs   = reset HEAD
+  rs1  = reset HEAD~
+  rs2  = reset HEAD~~
+  rs3  = reset HEAD~~~
+  rs4  = reset HEAD~~~~
+  rs5  = reset HEAD~~~~~
+  rss  = reset --soft HEAD
+  rss1 = reset --soft HEAD~
+  rss2 = reset --soft HEAD~~
+  rss3 = reset --soft HEAD~~~
+  rss4 = reset --soft HEAD~~~~
+  rss5 = reset --soft HEAD~~~~~
+  # rebase
+  rb   = rebase
+  rbi  = rebase -i
+  rbi1 = rebase -i HEAD^
+  rbi2 = rebase -i HEAD^^
+  rbi3 = rebase -i HEAD^^^
+  rbi4 = rebase -i HEAD^^^^
+  rbi5 = rebase -i HEAD^^^^^
+  # diff
+  df = diff
+  # other
+  difff = diff --word-diff
+  graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+  gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+  diffdir = difftool -d
+  difftooldir = difftool --dir-diff
+  # git flow
+  ffs = flow feature start
+  frs = flow release start
+[fetch]
+  prune = true
+[merge]
+  ff = false
+[mergetool]
+  keepBackup = false
+  trustExitCode = false
+[pull]
+  # rebase = preserve
+  ff = only
+[push]
+	default = current
+[init]
+	templatedir = ~/.git_template
+[merge "mergepbx"]
+	name = Xcode project files merger
+	driver = mergepbx %O %A %B
+[pager]
+	diff = diff-so-fancy | less --tabs=2 -RFX
+	show = diff-so-fancy | less --tabs=2 -RFX
+[ghq]
+  root = ~/.ghq
