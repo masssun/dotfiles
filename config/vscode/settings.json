@@ -1,4 +1,6 @@
 {
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
     "[dart]": {
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
@@ -16,6 +18,9 @@
     "[proto3]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "xaver.clang-format"
+    },
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false // 行末に 2 つのスペースを入れて改行するケースがあるため
     },
     "clang-format.language.proto.style": "{ ColumnLimit: 80, IndentWidth: 2, BasedOnStyle: Google }"
 }
