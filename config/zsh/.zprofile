@@ -1,5 +1,5 @@
 # Set PATH, MANPATH, etc., for Homebrew.
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(brew shellenv)"
 
 export PATH="/usr/local/bin/git:$PATH"
 export PATH="$PATH:$HOME/.pub-cache/bin"
