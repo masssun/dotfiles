@@ -1,5 +1,5 @@
 {
-	"print information": {
+    "print information": {
         "body": ["print('🟢 ${1}');"],
         "prefix": "finfo",
         "description": "Prints an infomation"
