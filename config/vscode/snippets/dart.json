@@ -1,0 +1,33 @@
+{
+	"print information": {
+        "body": ["print('🟢 ${1}');"],
+        "prefix": "finfo",
+        "description": "Prints an infomation"
+    },
+    "print warning": {
+        "body": ["print('🟡 ${1}');"],
+        "prefix": "fwarn",
+        "description": "Prints a warning"
+    },
+    "print error": {
+        "body": ["print('🔴 ${1}');"],
+        "prefix": "ferror",
+        "description": "Prints an error"
+    },
+    "freezed class generation": {
+        "body": [
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "",
+            "part '$TM_FILENAME_BASE.freezed.dart';",
+            "",
+            "@freezed",
+            "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1} {",
+            "  const factory ${1}({",
+            "    required ${2:String id},",
+            "  }) = _${1};",
+            "}"
+        ],
+        "prefix": "frzd",
+        "description": "Generate freezed class"
+    }
+}
