@@ -16,32 +16,65 @@ alias fbuild="flutter pub run build_runner build --delete-conflicting-outputs"
 # Docker
 alias d="docker"
 alias ds="docker search"
-alias dim="docker images"
-alias dimp="docker image pull"
+alias di="docker images"
+alias dipl="docker image pull"
 alias drmi="docker rmi"
+alias drmia="docker image prune" # 未使用イメージを全て削除
 alias dps="docker ps"
 alias dpsa="docker ps -a"
 alias dr="docker run"
-alias drd="docker run -d" # コンテナのメインプロセスを端末からデタッチする
-alias drit="docker run -it" # コンテナの標準入力を開く / 端末を割り当てる
+alias dri=docker_run_interactively
+alias drb=docker_run_background
+alias drs=docker_run_server
 alias dst="docker start"
 alias dsp="docker stop"
 alias drst="docker restart"
 alias drm="docker rm"
+alias drmca="docker container prune" # 未使用コンテナを全て削除
 alias drnm="docker rename"
 alias datch="docker attach"
-alias dexe="docker exec"
-alias dexeit="docker exec -it" # コンテナの標準入力を開く / 端末を割り当てる
+alias dex="docker exec"
+alias dexi=docker_exec_interactively
+alias dl="docker logs"
+alias dlf="docker logs -f"
+alias db="docker build"
+alias dba="docker build ."
+alias adat=docker_build_with_tag
+alias dbft=docker_build_file_with_tag
+alias dcu="docker compose up"
+alias dcub="docker compose up --build"
+alias dcubd="docker compose up --build -d"
+alias dcr="docker compose restart"
+
+function docker_build_with_tag() {
+    docker build . -t $1
+}
+function docker_build_file_with_tag() {
+    docker build . -f $1 -t $2
+}
+function docker_run_interactively() {
+    docker run -it $1 /bin/bash
+}
+function docker_run_background() {
+    docker run -it -d $1 /bin/bash
+}
+function docker_run_server() {
+    docker run -it -p $2 $1 /bin/bash
+}
+function docker_exec_interactively() {
+    docker exec -it $1 /bin/bash
+}
 
 # protoc
-function pcgo() {
+alias pcgo=protoc_gen_go
+alias pcdt=protoc_gen_dart
+
+function protoc_gen_go() {
     protoc -I $1 --go_out=paths=source_relative:$2 --go-grpc_out=paths=source_relative:$2 $1/*.proto
 }
-function pcdt() {
+function protoc_gen_dart() {
     protoc -I $1 --dart_out=$2 $1/*.proto
 }
-alias pcgo=pcgo
-alias pcdt=pcdt
 
 # Shell
 alias relogin="exec $SHELL -l"
