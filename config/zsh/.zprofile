@@ -1,5 +1,5 @@
 # Set PATH, MANPATH, etc., for Homebrew.
-eval "$(brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # For protoc-gen-dart
 export PATH="$PATH:$HOME/.pub-cache/bin"
