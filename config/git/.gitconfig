@@ -30,6 +30,7 @@
   pl   = pull
   # branch
   br   = branch
+  brm  = branch -m
   brv  = branch -vv
   brd  = branch -D
   # reset
