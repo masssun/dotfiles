@@ -11,7 +11,14 @@ alias gcd='cd $(ghq root)/$(ghq list | peco)'
 # Flutter
 alias flutter="fvm flutter"
 alias ftest="flutter test -r expanded"
+alias fprun="flutter pub run"
 alias fbuild="flutter pub run build_runner build --delete-conflicting-outputs"
+alias fcreate=flutter_create
+alias mls="flutter pub run melos"
+
+function flutter_create() {
+    flutter create $1 --org=$2 --platforms=android,ios && mv $1/* $1/.[^\.]* ./ && rm -rf $1
+}
 
 # Docker
 alias d="docker"
@@ -19,7 +26,7 @@ alias ds="docker search"
 alias di="docker images"
 alias dipl="docker image pull"
 alias drmi="docker rmi"
-alias drmia="docker image prune" # 未使用イメージを全て削除
+alias drmip="docker image prune" # 未使用イメージを全て削除
 alias dps="docker ps"
 alias dpsa="docker ps -a"
 alias dr="docker run"
@@ -39,8 +46,10 @@ alias dl="docker logs"
 alias dlf="docker logs -f"
 alias db="docker build"
 alias dba="docker build ."
-alias adat=docker_build_with_tag
+alias dbt=docker_build_with_tag
 alias dbft=docker_build_file_with_tag
+alias dc="docker compose"
+alias dcbn="docker compose build --no-cache"
 alias dcu="docker compose up"
 alias dcub="docker compose up --build"
 alias dcubd="docker compose up --build -d"
@@ -81,3 +90,26 @@ alias relogin="exec $SHELL -l"
 
 alias rr="rm -r"
 alias rrf="rm -rf"
+
+# iOS
+alias lapp="la ~/Library/MobileDevice/Provisioning\ Profiles"
+alias rpp=remove_provisioning_profile
+alias rppa="rm -f ~/Library/MobileDevice/Provisioning\ Profiles/*"
+
+function remove_provisioning_profile() {
+    rm -f ~/Library/MobileDevice/Provisioning\ Profiles/$1
+}
+
+# grpcurl
+alias gcl=grpcurl_daifuku
+alias gcll=grpcurl_daifuku_list
+
+function grpcurl_daifuku() {
+    grpcurl -plaintext -rpc-header 'authorization: Bearer mock-user-id-1' localhost:9090 $1
+}
+function grpcurl_daifuku_list() {
+     grpcurl -plaintext localhost:9090 list $1
+}
+
+# Go
+alias goi="echo $(git diff --name-only) | xargs gosimports -w"
