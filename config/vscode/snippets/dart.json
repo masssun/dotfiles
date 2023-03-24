@@ -14,7 +14,25 @@
         "prefix": "ferror",
         "description": "Prints an error"
     },
+    "Create StatelessWidget": {
+        "prefix": "stless",
+        "body": [
+            "import 'package:flutter/material.dart';",
+            "",
+            "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} extends StatelessWidget {",
+            "  const ${1}({super.key});",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context) {",
+            "    return Container();",
+            "  }",
+            "}",
+            ""
+        ],
+        "description": ""
+    },
     "freezed class generation": {
+        "prefix": "frzd",
         "body": [
             "import 'package:freezed_annotation/freezed_annotation.dart';",
             "",
@@ -27,7 +45,97 @@
             "  }) = _${1};",
             "}"
         ],
-        "prefix": "frzd",
         "description": "Generate freezed class"
+    },
+    "Create ConsumerWidget": {
+        "prefix": "consumer",
+        "body": [
+            "import 'package:flutter/material.dart';",
+            "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+            "",
+            "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} extends ConsumerWidget {",
+            "  const ${1}({super.key});",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context, WidgetRef ref) {",
+            "    return Container();",
+            "  }",
+            "}",
+            ""
+        ],
+        "description": ""
+    },
+    "Create an immutable Model": {
+        "prefix": "fmodel",
+        "body": [
+          "@immutable",
+          "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}}Model {",
+          "",
+          "  const ${1}Model();",
+          "}"
+        ],
+        "description": "create an immutable model"
+    },
+    "Provider.autoDispose": {
+        "prefix": "fauto",
+        "body": [
+            "final ${1}Provider = Provider.autoDispose((ref) {})"
+        ],
+        "description": "Provider.autoDispose"
+    },
+    "Provider.autoDispose.family": {
+        "prefix": "ffamily",
+        "body": [
+          "final Provider = Provider.autoDispose.family<${1}, ${2}>((ref, arg) {})  "
+        ],
+        "description": "Provider.autoDispose.family"
+    },
+    "Perform when action": {
+        "prefix": "fwhen",
+        "body": [
+          "when(",
+          "  data: (data) {},",
+          "  error: (error, stackTrace) {},",
+          "  loading: () {},",
+          ")"
+        ],
+        "description": "Perform when action"
+    },
+    "Provider Test": {
+        "prefix": "ftestp",
+        "body": [
+          "import 'package:flutter_test/flutter_test.dart';",
+          "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+          "",
+          "void main() {",
+          "  ProviderContainer buildContainer() {",
+          "    final container = ProviderContainer();",
+          "    addTearDown(container.dispose);",
+          "    return container;",
+          "  }",
+          "",
+          "  group('group_name', () {",
+          "    test('test_name', () {",
+          "      final container = buildContainer();",
+          "    });",
+          "  });",
+          "}",
+          ""
+        ],
+        "description": "Provider Test"
+    },
+    "having matcher": {
+        "prefix": "fhaving",
+        "body": [
+          "having((e) => e.${1}, '', isA<${2}>())"
+        ],
+        "description": "having matcher"
+    },
+    "simple having matcher": {
+        "prefix": "fshaving",
+        "body": [
+          "having((e) => e.${1}, '', isA<${2}>())"
+        ],
+        "description": "simple having matcher"
     }
 }

@@ -16,11 +16,9 @@
         "editor.wordBasedSuggestions": false
     },
     "[proto3]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "xaver.clang-format"
+        "editor.formatOnSave": true
     },
     "[markdown]": {
         "files.trimTrailingWhitespace": false // 行末に 2 つのスペースを入れて改行するケースがあるため
-    },
-    "clang-format.language.proto.style": "{ ColumnLimit: 80, IndentWidth: 2, BasedOnStyle: Google }"
+    }
 }
