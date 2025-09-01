@@ -1,0 +1,571 @@
+{
+  "Switch expression": {
+    "prefix": "switch_expression",
+    "body": [
+      "final _ = switch (this) {",
+      "  ${1:any_case} => ${2:value},",
+      "  _ => null,",
+      "};"
+    ],
+    "description": "Switch expression"
+  },
+  "Create abstract interface class": {
+    "prefix": "interface_class",
+    "body": [
+      "abstract interface class ${1:class} {",
+      "}"
+    ],
+    "description": "Create abstract interface class"
+  },
+  "try catch statement": {
+    "prefix": "try_catch",
+    "body": [
+      "try {",
+      "  ${1}",
+      "} catch (error) {",
+      "}"
+    ],
+    "description": "try catch statement"
+  },
+  "Generate exception template": {
+    "prefix": "exception_template",
+    "body": [
+      "class ${1:NAME}Error implements Exception {",
+      "  const ${1:NAME}Error();",
+      "}"
+    ],
+    "description": "Generate exception template"
+  },
+  "Generate exception with sealed class template": {
+    "prefix": "exception_with_sealed_template",
+    "body": [
+      "abstract interface class ${1:BASE_NAME}Exception implements Exception {}",
+      "",
+      "class ${2:NAME}Error implements ${1:BASE_NAME}Exception {",
+      "  const ${2:NAME}Error();",
+      "}"
+    ],
+    "description": "Generate exception template"
+  },
+  "Generate sealed class": {
+    "prefix": "sealed_class",
+    "body": [
+      "sealed class ${1:SEALED_CLASS} {",
+      "}",
+      "",
+      "class ${2:CONCRETE_CLASS} implements ${1} {",
+      "}"
+    ],
+    "description": "Generate sealed class"
+  },
+  "Import developer": {
+    "prefix": "importdeveloper",
+    "body": [
+      "import 'dart:developer' as developer;"
+    ],
+    "description": "Import developer"
+  },
+  "Log by red color": {
+    "prefix": "logred",
+    "body": [
+      "developer.log('\\x1B[31m${1}\\x1B[0m');"
+    ],
+    "description": "Log by red color"
+  },
+  "Log by green color": {
+    "prefix": "loggreen",
+    "body": [
+      "developer.log('\\x1B[32m${1}\\x1B[0m');"
+    ],
+    "description": "Log by green color"
+  },
+  "Log by yellow color": {
+    "prefix": "logyellow",
+    "body": [
+      "developer.log('\\x1B[33m${1}\\x1B[0m');"
+    ],
+    "description": "Log by yellow color"
+  },
+  "Log by blue color": {
+    "prefix": "logblue",
+    "body": [
+      "developer.log('\\x1B[34m${1}\\x1B[0m');"
+    ],
+    "description": "Log by blue color"
+  },
+  "print information": {
+    "body": [
+      "print('🟢 ${1}');"
+    ],
+    "prefix": "printinfo",
+    "description": "Prints an infomation"
+  },
+  "print warning": {
+    "body": [
+      "print('🟡 ${1}');"
+    ],
+    "prefix": "printwarn",
+    "description": "Prints a warning"
+  },
+  "print error": {
+    "body": [
+      "print('🔴 ${1}');"
+    ],
+    "prefix": "printerror",
+    "description": "Prints an error"
+  },
+  "Create StatelessWidget": {
+    "prefix": "stless",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} extends StatelessWidget {",
+      "  const ${1}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "    return Container();",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "freezed class generation": {
+    "prefix": "frzd",
+    "body": [
+      "import 'package:freezed_annotation/freezed_annotation.dart';",
+      "",
+      "part '$TM_FILENAME_BASE.freezed.dart';",
+      "",
+      "@freezed",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1} {",
+      "  const factory ${1}({",
+      "    required ${2:String id},",
+      "  }) = _${1};",
+      "}"
+    ],
+    "description": "Generate freezed class"
+  },
+  "Create ConsumerWidget": {
+    "prefix": "consumer",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} extends ConsumerWidget {",
+      "  const ${1}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return Container();",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "Create HookConsumerWidget": {
+    "prefix": "hook_consumer",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} extends HookConsumerWidget {",
+      "  const ${1}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return Container();",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "Create an immutable Model": {
+    "prefix": "fmodel",
+    "body": [
+      "@immutable",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}}Model {",
+      "",
+      "  const ${1}Model();",
+      "}"
+    ],
+    "description": "create an immutable model"
+  },
+  "ref.watch": {
+    "prefix": "watch_ref",
+    "body": [
+      "final _ = ref.watch($1);"
+    ],
+    "description": "ref.watch"
+  },
+  "AsyncValue.when short": {
+    "prefix": "when_short",
+    "body": [
+      "when(",
+      "  data:(data) => $1,",
+      "  error:(_, __) => $2,",
+      "  loading:() => $3,",
+      ")"
+    ],
+    "description": "AsyncValue.when"
+  },
+  "AsyncValue.when long": {
+    "prefix": "when_long",
+    "body": [
+      "when(",
+      "  data:(data) {",
+      "  },",
+      "  error:(_, __) {",
+      "  },",
+      "  loading:() {",
+      "  },",
+      ")"
+    ],
+    "description": "AsyncValue.when"
+  },
+  "Provider.autoDispose": {
+    "prefix": "providerauto",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1}Provider = Provider.autoDispose((ref) {",
+      "});"
+    ],
+    "description": "Provider.autoDispose"
+  },
+  "FutureProvider.autoDispose": {
+    "prefix": "futureproviderauto",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1}Provider = FutureProvider.autoDispose((ref) {",
+      "});"
+    ],
+    "description": "FutureProvider.autoDispose"
+  },
+  "StateProvider.autoDispose": {
+    "prefix": "stateproviderauto",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1}Provider = StateProvider.autoDispose((ref) {",
+      "});"
+    ],
+    "description": "StateProvider.autoDispose"
+  },
+  "Provider.autoDispose.family": {
+    "prefix": "ffamily",
+    "body": [
+      "final Provider = Provider.autoDispose.family<${1}, ${2}>((ref, arg) {})  "
+    ],
+    "description": "Provider.autoDispose.family"
+  },
+  "Generate AutoDisposeNotifier": {
+    "prefix": "notifier_auto",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1:NAME_}Provider = NotifierProvider.autoDispose<${2:CLASS_NAME_}Notifier, ${3:TYPE}>(() {",
+      "  return ${2:CLASS_NAME_}Notifier();",
+      "});",
+      "",
+      "class ${2:CLASS_NAME_}Notifier extends AutoDisposeNotifier<${3:TYPE}> {",
+      "  @override",
+      "  ${3:TYPE} build() {",
+      "    throw UnimplementedError();",
+      "  }",
+      "}"
+    ],
+    "description": "Generate AutoDisposeNotifier"
+  },
+  "Generate AutoDisposeFamilyNotifier": {
+    "prefix": "notifier_auto_family",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1:NAME_}Provider = NotifierProvider.autoDispose",
+      "    .family<${2:CLASS_NAME_}Notifier, ${3:TYPE}, ${4:ARG}>(${2}Notifier.new);",
+      "",
+      "class ${2}Notifier extends AutoDisposeFamilyNotifier<${3}, ${4}> {",
+      "  @override",
+      "  ${3} build(${4} arg) {",
+      "    throw UnimplementedError();",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": "Generate AutoDisposeFamilyNotifier"
+  },
+  "Generate AutoDisposeAsyncNotifier": {
+    "prefix": "async_notifier_auto",
+    "body": [
+      "import 'dart:async';",
+      "",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1:NAME_}Provider = AsyncNotifierProvider.autoDispose<${2:CLASS_NAME_}Notifier, ${3:TYPE}>(() {",
+      "  return ${2:CLASS_NAME_}Notifier();",
+      "});",
+      "",
+      "class ${2:CLASS_NAME_}Notifier extends AutoDisposeAsyncNotifier<${3:TYPE}> {",
+      "  @override",
+      "  FutureOr<${3:TYPE}> build() {",
+      "    throw UnimplementedError();",
+      "  }",
+      "}"
+    ],
+    "description": "Generate AutoDisposeAsyncNotifier"
+  },
+  "Generate controller template": {
+    "prefix": "controller_template",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${1:NAME}ControllerProvider = Provider.autoDispose",
+      "    .family<${1:NAME}Controller, BuildContext>(${1:NAME}Controller.new);",
+      "",
+      "class ${1:NAME}Controller {",
+      "  final Ref _ref;",
+      "  final BuildContext _context;",
+      "",
+      "  ${1:NAME}Controller(this._ref, this._context);",
+      "}"
+    ],
+    "description": "Generate controller template"
+  },
+  "Generate UseCase": {
+    "prefix": "usecase",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${2:${1/(.*)/${1:/downcase}/}}UseCaseProvider = Provider.autoDispose(${1:NAME}UseCase.new);",
+      "",
+      "class ${1:NAME}UseCase {",
+      "  final Ref _ref;",
+      "",
+      "  const ${1:NAME}UseCase(this._ref);",
+      "}",
+      ""
+    ],
+    "description": "Generate UseCase"
+  },
+  "Generate UseCase and delegate": {
+    "prefix": "usecase_and_delegate",
+    "body": [
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "final ${2:${1/(.*)/${1:/downcase}/}}UseCaseProvider = Provider.autoDispose",
+      "    .family<${1}UseCase, ${1}UseCaseDelegate>(${1}UseCase.new);",
+      "",
+      "abstract interface class ${1}UseCaseDelegate {",
+      "}",
+      "",
+      "class ${1}UseCase {",
+      "  final Ref _ref;",
+      "  final ${1}UseCaseDelegate _delegate;",
+      "",
+      "  const ${1}UseCase(this._ref, this._delegate);",
+      "}",
+      ""
+    ],
+    "description": "Generate UseCase and delegate"
+  },
+  "Measure processing time": {
+    "prefix": "stopwatch_snippet",
+    "body": [
+      "final stopwatch = Stopwatch();",
+      "stopwatch.start();",
+      "// Write procedure to measure.",
+      "stopwatch.stop();",
+      "print('⏱️ Elapsed ${stopwatch.elapsedMilliseconds}ms');"
+    ],
+    "description": "Measure processing time"
+  },
+  "Delay a second": {
+    "prefix": "delay_second",
+    "body": [
+      "await Future<void>.delayed(const Duration(seconds: 1));"
+    ],
+    "description": "Delay a second"
+  },
+  "Check whether context is mounted": {
+    "prefix": "mounted",
+    "body": [
+      "if (context.mounted) {",
+      "  ${1}",
+      "}"
+    ],
+    "description": "Check whether context is mounted"
+  },
+  "Create test group": {
+    "prefix": "test_group_statement",
+    "body": [
+      "group('group_name', () {",
+      "  test('test_name', () {",
+      "  });",
+      "});"
+    ],
+    "description": "Create test group"
+  },
+  "Create test": {
+    "prefix": "test_statement",
+    "body": [
+      "test('test_name', () {",
+      "});"
+    ],
+    "description": "Create test"
+  },
+  "Flutter test template": {
+    "prefix": "test_template",
+    "body": [
+      "import 'package:flutter_test/flutter_test.dart';",
+      "",
+      "void main() {",
+      "  group('group_name', () {",
+      "    test('test_name', () {",
+      "    });",
+      "  });",
+      "}"
+    ],
+    "description": "Flutter test template"
+  },
+  "Test template for UseCase": {
+    "prefix": "test_template_usecase",
+    "body": [
+      "import 'package:flutter_test/flutter_test.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "import 'package:mockito/mockito.dart';",
+      "",
+      "import '../../../mock/feature.mocks.dart';",
+      "",
+      "void main() {",
+      "  late FeatureUseCase usecase;",
+      "",
+      "  final delegate = MockDelegate();",
+      "",
+      "  setUp(() {",
+      "    reset(delegate);",
+      "",
+      "    usecase = ProviderContainer(overrides: [",
+      "    ]).read(featureUseCaseProvider(delegate));",
+      "  });",
+      "",
+      "  group('group', () {",
+      "    test('test', () async {",
+      "      usecase;",
+      "",
+      "      verify(delegate);",
+      "",
+      "      verifyNoMoreInteractions(delegate);",
+      "    });",
+      "  });",
+      "}",
+      ""
+    ],
+    "description": "Test template for UseCase"
+  },
+  "Test template for AsyncNotifier": {
+    "prefix": "test_template_async_notifier",
+    "body": [
+      "import 'package:flutter_test/flutter_test.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "import 'package:mockito/mockito.dart';",
+      "",
+      "import '../../../mock/feature.mocks.dart';",
+      "import '../../../provider_listener.dart';",
+      "",
+      "void main() {",
+      "  final repository = MockRepository();",
+      "  final listener = Listener<AsyncValue<List<Data>>>();",
+      "",
+      "  late ProviderContainer providerContainer;",
+      "",
+      "  setUp(() {",
+      "    reset(listener);",
+      "",
+      "    providerContainer = ProviderContainer(overrides: [",
+      "      repositoryProvider.overrideWith((ref) => repository),",
+      "    ]);",
+      "  });",
+      "",
+      "  group('build()', () {",
+      "    test('returns a list of data retrieved via API', () async {",
+      "      final data = [];",
+      "      when(repository.fetch()).thenAnswer((_) async => data);",
+      "",
+      "      providerContainer.listen(dataProvider, listener.call);",
+      "",
+      "      await providerContainer.read(dataProvider.future);",
+      "",
+      "      verify(listener(",
+      "        const AsyncLoading<List<Data>>(),",
+      "        AsyncData<List<Data>>(data),",
+      "      ));",
+      "      verifyNoMoreInteractions(listener);",
+      "    });",
+      "  });",
+      "}",
+      ""
+    ],
+    "description": "Test template for AsyncNotifier"
+  },
+  "Perform when action": {
+    "prefix": "fwhen",
+    "body": [
+      "when(",
+      "  data: (data) {},",
+      "  error: (error, stackTrace) {},",
+      "  loading: () {},",
+      ")"
+    ],
+    "description": "Perform when action"
+  },
+  "Provider Test": {
+    "prefix": "ftestp",
+    "body": [
+      "import 'package:flutter_test/flutter_test.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "void main() {",
+      "  ProviderContainer buildContainer() {",
+      "    final container = ProviderContainer();",
+      "    addTearDown(container.dispose);",
+      "    return container;",
+      "  }",
+      "",
+      "  group('group_name', () {",
+      "    test('test_name', () {",
+      "      final container = buildContainer();",
+      "    });",
+      "  });",
+      "}",
+      ""
+    ],
+    "description": "Provider Test"
+  },
+  "having matcher": {
+    "prefix": "fhaving",
+    "body": [
+      "having((e) => e.${1}, '', isA<${2}>())"
+    ],
+    "description": "having matcher"
+  },
+  "simple having matcher": {
+    "prefix": "fshaving",
+    "body": [
+      "having((e) => e.${1}, '', isA<${2}>())"
+    ],
+    "description": "simple having matcher"
+  },
+  "Generate nice mocks": {
+    "prefix": "generatemocks",
+    "body": [
+      "@GenerateNiceMocks([MockSpec<${1}>()])"
+    ],
+    "description": "Generate nice mocks"
+  }
+}

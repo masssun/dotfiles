@@ -1,0 +1,113 @@
+#!/bin/bash
+set -eu
+
+# Color definitions
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+DOTFILES_HOME=$(pwd)
+CONFIG_HOME="config"
+VS_CODE="vscode"
+
+configs=(
+    git
+    $VS_CODE
+    zsh
+    wezterm
+    claude
+)
+
+backup_if_exists () {
+    local target="$1"
+    if [[ -e "$target" && ! -L "$target" ]]; then
+        local backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
+        echo -e "  ${YELLOW}⚠ Backing up:${NC} $(basename "$target") -> $(basename "$backup")"
+        mv "$target" "$backup"
+    fi
+}
+
+create_symbolic_links () {
+    local target_dir="$1"
+    for item in .*; do
+        # Skip . and ..
+        [[ "$item" == "." || "$item" == ".." ]] && continue
+        # Skip if it doesn't exist (in case no dotfiles match)
+        [[ ! -e "$item" ]] && continue
+
+        local source="$(pwd)/$item"
+        local target="$target_dir/$item"
+
+        backup_if_exists "$target"
+        if ln -sf "$source" "$target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: $item"
+        else
+            echo -e "  ${RED}✗${NC} Failed: $item"
+        fi
+    done
+}
+
+echo -e "\n${BLUE}========== Dotfiles Installation ==========${NC}\n"
+
+for i in "${!configs[@]}"; do
+    config="${configs[$i]}"
+    echo -e "${BLUE}[$(($i + 1))/${#configs[@]}] Installing $config...${NC}"
+
+    cd "$DOTFILES_HOME/$CONFIG_HOME/$config"
+
+    if [[ "$config" == "$VS_CODE" ]]; then
+        create_symbolic_links "$HOME/Library/Application Support/Code/User"
+    elif [[ "$config" == "wezterm" ]]; then
+        target="$HOME/.wezterm.lua"
+        backup_if_exists "$target"
+        if ln -sf "$DOTFILES_HOME/$CONFIG_HOME/$config/wezterm.lua" "$target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: .wezterm.lua"
+        else
+            echo -e "  ${RED}✗${NC} Failed: .wezterm.lua"
+        fi
+    elif [[ "$config" == "claude" ]]; then
+        for file in CLAUDE.md settings.json; do
+            source="$DOTFILES_HOME/$CONFIG_HOME/$config/$file"
+            target="$HOME/.claude/$file"
+            backup_if_exists "$target"
+            if ln -sf "$source" "$target" 2>/dev/null; then
+                echo -e "  ${GREEN}✓${NC} Linked: $file"
+            else
+                echo -e "  ${RED}✗${NC} Failed: $file"
+            fi
+        done
+
+        # Create symlink for commands directory
+        commands_source="$DOTFILES_HOME/$CONFIG_HOME/$config/commands"
+        commands_target="$HOME/.claude/commands"
+        backup_if_exists "$commands_target"
+        if ln -sfn "$commands_source" "$commands_target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: commands/"
+        else
+            echo -e "  ${RED}✗${NC} Failed: commands/"
+        fi
+    elif [[ "$config" == "zsh" ]]; then
+        # Create symbolic links for zsh dotfiles
+        create_symbolic_links "$HOME"
+
+        # Create ~/.config/zsh directory if it doesn't exist
+        mkdir -p "$HOME/.config/zsh"
+
+        # Create symlink for rc directory
+        rc_source="$DOTFILES_HOME/$CONFIG_HOME/$config/rc"
+        rc_target="$HOME/.config/zsh/rc"
+        backup_if_exists "$rc_target"
+        if ln -sfn "$rc_source" "$rc_target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: rc/ (contains aliases)"
+        else
+            echo -e "  ${RED}✗${NC} Failed: rc/"
+        fi
+    else
+        create_symbolic_links "$HOME"
+    fi
+    echo ""
+done
+
+echo -e "${GREEN}✨ Installation completed!${NC}\n"

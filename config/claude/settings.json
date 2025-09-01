@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(~/.zshrc)"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(rm:*)",
+      "Bash(rm -rf:*)",
+      "Read(.env)",
+      "Read(*.p8)",
+      "Read(id_rsa)",
+      "Read(id_ed25519)",
+      "Write(.env)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(nc:*)",
+      "Bash(fvm destroy:*)",
+      "Bash(fvm remove:*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude Code has finished responding\" with title \"Claude Code\" sound name \"Glass\"'"
+          }
+        ]
+      }
+    ]
+  }
+}

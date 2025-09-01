@@ -1,0 +1,24 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [80],
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true,
+            "source.organizeImports": true
+        },
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    },
+    "[proto3]": {
+        "editor.formatOnSave": true
+    },
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false // 行末に 2 つのスペースを入れて改行するケースがあるため
+    }
+}

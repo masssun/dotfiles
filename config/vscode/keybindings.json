@@ -1,0 +1,103 @@
+[
+  // Navigation
+  {
+    "key": "shift+cmd+e",
+    "command": "workbench.view.explorer",
+    "when": "viewContainer.workbench.view.explorer.enabled"
+  },
+  {
+    "key": "shift+cmd+d",
+    "command": "workbench.view.debug",
+    "when": "viewContainer.workbench.view.debug.enabled"
+  },
+  {
+    "key": "cmd+e",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  // Editor
+  {
+    "key": "ctrl+shift+k",
+    "command": "editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+a",
+    "command": "cursorHome",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "cmd+left",
+    "command": "cursorLineStart",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "editor.action.revealDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "editor.action.goToImplementation",
+    "when": "editorHasImplementationProvider && editorTextFocus"
+  },
+  {
+    "key": "cmd+u",
+    "command": "editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+cmd+r",
+    "command": "editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+  },
+  // Debug
+  {
+    "key": "cmd+r",
+    "command": "workbench.action.debug.start",
+    "when": "debuggersAvailable && debugState == 'inactive'"
+  },
+  {
+    "key": "cmd+.",
+    "command": "workbench.action.debug.stop",
+    "when": "inDebugMode && !focusedSessionIsAttach"
+  },
+  {
+    "key": "shift+cmd+r",
+    "command": "workbench.action.debug.restart",
+    "when": "inDebugMode"
+  },
+  // Removed
+  {
+    "key": "cmd+e",
+    "command": "-editor.action.toggleScreenReaderAccessibilityMode",
+    "when": "accessibilityHelpIsShown"
+  },
+  {
+    "key": "cmd+e",
+    "command": "-actions.findWithSelection"
+  },
+  {
+    "key": "cmd+t",
+    "command": "-workbench.action.showAllSymbols"
+  },
+  {
+    "key": "cmd+f12",
+    "command": "-editor.action.goToImplementation",
+    "when": "editorHasImplementationProvider && editorTextFocus"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "-editor.action.transposeLetters",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+`",
+    "command": "-workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  }
+]
