@@ -31,11 +31,34 @@ backup_if_exists () {
 
 create_symbolic_links () {
     local target_dir="$1"
-    for item in .*; do
-        # Skip . and ..
-        [[ "$item" == "." || "$item" == ".." ]] && continue
-        # Skip if it doesn't exist (in case no dotfiles match)
+    local include_dotfiles="${2:-true}"
+
+    if [[ "$include_dotfiles" == "true" ]]; then
+        # Process dotfiles (hidden files)
+        for item in .*; do
+            # Skip . and ..
+            [[ "$item" == "." || "$item" == ".." ]] && continue
+            # Skip if it doesn't exist (in case no dotfiles match)
+            [[ ! -e "$item" ]] && continue
+
+            local source="$(pwd)/$item"
+            local target="$target_dir/$item"
+
+            backup_if_exists "$target"
+            if ln -sf "$source" "$target" 2>/dev/null; then
+                echo -e "  ${GREEN}✓${NC} Linked: $item"
+            else
+                echo -e "  ${RED}✗${NC} Failed: $item"
+            fi
+        done
+    fi
+
+    # Process regular files
+    for item in *; do
+        # Skip if it doesn't exist (in case no files match)
         [[ ! -e "$item" ]] && continue
+        # Skip directories
+        [[ -d "$item" ]] && continue
 
         local source="$(pwd)/$item"
         local target="$target_dir/$item"
@@ -58,7 +81,17 @@ for i in "${!configs[@]}"; do
     cd "$DOTFILES_HOME/$CONFIG_HOME/$config"
 
     if [[ "$config" == "$VS_CODE" ]]; then
-        create_symbolic_links "$HOME/Library/Application Support/Code/User"
+        create_symbolic_links "$HOME/Library/Application Support/Code/User" "false"
+
+        # Create symlink for snippets directory
+        snippets_source="$DOTFILES_HOME/$CONFIG_HOME/$config/snippets"
+        snippets_target="$HOME/Library/Application Support/Code/User/snippets"
+        backup_if_exists "$snippets_target"
+        if ln -sfn "$snippets_source" "$snippets_target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: snippets/"
+        else
+            echo -e "  ${RED}✗${NC} Failed: snippets/"
+        fi
     elif [[ "$config" == "wezterm" ]]; then
         target="$HOME/.wezterm.lua"
         backup_if_exists "$target"
