@@ -18,6 +18,7 @@ configs=(
     zsh
     wezterm
     claude
+    codex
 )
 
 backup_if_exists () {
@@ -120,6 +121,22 @@ for i in "${!configs[@]}"; do
             echo -e "  ${GREEN}✓${NC} Linked: commands/"
         else
             echo -e "  ${RED}✗${NC} Failed: commands/"
+        fi
+    elif [[ "$config" == "codex" ]]; then
+        codex_dir="$HOME/.codex"
+        if [[ -L "$codex_dir" ]]; then
+            rm "$codex_dir"
+        fi
+
+        mkdir -p "$codex_dir"
+
+        source="$DOTFILES_HOME/$CONFIG_HOME/$config/config.toml"
+        target="$codex_dir/config.toml"
+        backup_if_exists "$target"
+        if ln -sf "$source" "$target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: config.toml"
+        else
+            echo -e "  ${RED}✗${NC} Failed: config.toml"
         fi
     elif [[ "$config" == "zsh" ]]; then
         # Create symbolic links for zsh dotfiles
