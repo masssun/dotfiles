@@ -1,1 +1,19 @@
 model = "gpt-5-codex"
+model_reasoning_effort = "medium"
+network_access = true
+hide_agent_reasoning = true
+
+notify = ["bash", "-lc", "afplay /System/Library/Sounds/Glass.aiff"]
+
+[tools]
+web_search = true
+jq = true
+
+[ui]
+color = true
+pager = "less -R"
+wrap_lines = true
+
+[debug]
+show_tokens = true
+print_exec_time = true
