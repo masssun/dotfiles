@@ -19,6 +19,7 @@ configs=(
     wezterm
     claude
     codex
+    xcode
 )
 
 backup_if_exists () {
@@ -153,6 +154,20 @@ for i in "${!configs[@]}"; do
             echo -e "  ${GREEN}✓${NC} Linked: rc/ (contains aliases)"
         else
             echo -e "  ${RED}✗${NC} Failed: rc/"
+        fi
+    elif [[ "$config" == "xcode" ]]; then
+        # Create Xcode templates directory if it doesn't exist
+        xcode_templates_dir="$HOME/Library/Developer/Xcode/Templates/File Templates"
+        mkdir -p "$xcode_templates_dir"
+
+        # Create symlink for Custom templates directory
+        templates_source="$DOTFILES_HOME/$CONFIG_HOME/$config/Templates/File Templates/Custom"
+        templates_target="$xcode_templates_dir/Custom"
+        backup_if_exists "$templates_target"
+        if ln -sfn "$templates_source" "$templates_target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: Custom templates/"
+        else
+            echo -e "  ${RED}✗${NC} Failed: Custom templates/"
         fi
     else
         create_symbolic_links "$HOME"
