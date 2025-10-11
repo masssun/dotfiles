@@ -169,6 +169,20 @@ for i in "${!configs[@]}"; do
         else
             echo -e "  ${RED}✗${NC} Failed: Custom templates/"
         fi
+
+        # Create Xcode KeyBindings directory if it doesn't exist
+        xcode_keybindings_dir="$HOME/Library/Developer/Xcode/UserData/KeyBindings"
+        mkdir -p "$xcode_keybindings_dir"
+
+        # Create symlink for KeyBindings
+        keybindings_source="$DOTFILES_HOME/$CONFIG_HOME/$config/KeyBindings/Default.idekeybindings"
+        keybindings_target="$xcode_keybindings_dir/Default.idekeybindings"
+        backup_if_exists "$keybindings_target"
+        if ln -sf "$keybindings_source" "$keybindings_target" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} Linked: Default.idekeybindings"
+        else
+            echo -e "  ${RED}✗${NC} Failed: Default.idekeybindings"
+        fi
     else
         create_symbolic_links "$HOME"
     fi
