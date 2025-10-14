@@ -31,6 +31,7 @@ config.window_frame = {
 config.tab_bar_at_bottom = true
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false  -- シンプルなタブバー
+config.tab_max_width = 50
 
 -- ⌨️ キーバインド（VSCode/Cursorユーザー向けEmacs風）
 config.keys = {
@@ -106,6 +107,40 @@ config.set_environment_variables = {
 -- 🔔 Claude Code 通知設定 (ベル音を OS 通知に変換)
 wezterm.on('bell', function(window, pane)
   window:toast_notification('Claude Code', 'タスクが完了しました', nil, 4000)
+end)
+
+-- 🏷️ タブタイトルのカスタムフォーマット （固定幅で表示）
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  -- カレントディレクトリのフルパスを取得
+  local cwd = ''
+  if tab.active_pane.current_working_dir then
+    cwd = tab.active_pane.current_working_dir.file_path or ''
+  end
+
+  -- `ユーザー名/プロジェクト名` を抽出 (例: ~/ghq/github.com/masssun/dotfiles -> masssun/dotfiles)
+  local title = cwd:match("([^/]+/[^/]+)$") or cwd:match("([^/]+)$") or cwd
+
+  -- プロセス名も表示（git などのコマンド実行中に便利）
+  local process = tab.active_pane.foreground_process_name
+  if process then
+    process = process:match("([^/]+)$")  -- パスからファイル名だけ取得
+  end
+
+  -- タブタイトルを構築
+  if process and process ~= '' then
+    title = string.format('%s [%s]', title, process)
+  end
+
+  local tab_title = string.format(' %d: %s', tab.tab_index + 1, title)
+
+  -- 文字列が短い場合はスペースでパディング
+  if #tab_title < max_width then
+    tab_title = tab_title .. string.rep(' ', max_width - #tab_title)
+  end
+
+  return {
+    { Text = tab_title },
+  }
 end)
 
 -- 🎯 その他の人気設定
