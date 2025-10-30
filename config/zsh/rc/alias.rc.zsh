@@ -14,6 +14,54 @@ alias gco="git status -s | fzf -m | awk '{print \$2}' | xargs git checkout"
 alias gad="git status -s | fzf -m | awk '{print \$2}' | xargs git add"
 alias gdf="git status -s | fzf -m | awk '{print \$2}' | xargs git diff"
 
+# Git Worktree
+alias gwl="git worktree list"
+alias gwa="git worktree add"
+alias gwp="git worktree prune"
+alias gwab=git_worktree_add_branch
+alias gwcd=git_worktree_change_directory
+alias gwrm=git_worktree_remove
+alias gwopen=git_worktree_open_claude
+
+function git_worktree_add_branch() {
+    local branch=$1
+    local path=${2:-"../$branch"}
+
+    if [ -z "$branch" ]; then
+        echo "Usage: gwab <branch-name> [path]"
+        echo "  branch-name: Name of the new branch to create"
+        echo "  path: Optional worktree path (default: ../<branch-name>)"
+        return 1
+    fi
+
+    git worktree add -b "$branch" "$path"
+}
+
+function git_worktree_change_directory() {
+    local worktree=$(git worktree list | tail -n +2 | fzf --height 40% --reverse --prompt "Select worktree> " | awk '{print $1}')
+
+    if [ -n "$worktree" ]; then
+        cd "$worktree"
+    fi
+}
+
+function git_worktree_remove() {
+    local worktree=$(git worktree list | tail -n +2 | fzf --height 40% --reverse --prompt "Remove worktree> " | awk '{print $1}')
+
+    if [ -n "$worktree" ]; then
+        echo "Removing worktree: $worktree"
+        git worktree remove "$worktree"
+    fi
+}
+
+function git_worktree_open_claude() {
+    local worktree=$(git worktree list | tail -n +2 | fzf --height 40% --reverse --prompt "Open in Claude> " | awk '{print $1}')
+
+    if [ -n "$worktree" ]; then
+        cd "$worktree" && claude -c
+    fi
+}
+
 # Homebrew
 alias br="brew"
 alias brl="brew leaves"
