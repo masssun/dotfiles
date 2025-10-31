@@ -70,6 +70,8 @@
   wa = worktree add
   wr = worktree remove
   wl = worktree list
+  wp = worktree prune
+  wab = !sh -c 'git worktree add -b \"$1\" \"${2:-../$1}\"' -
 [core]
 	editor = vi
 [pull]
