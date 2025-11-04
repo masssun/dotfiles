@@ -80,6 +80,13 @@ alias clr="claude -r"
 alias cld="claude --dangerously-skip-permissions"
 alias clcd="claude -c --dangerously-skip-permissions"
 alias clrd="claude -r --dangerously-skip-permissions"
+# Claude with model
+alias clh="claude --model haiku"
+alias clch="claude -c --model haiku"
+alias clrh="claude -r --model haiku"
+alias cldh="claude -c --model haiku --dangerously-skip-permissions"
+clcdh="claude -c --model haiku --dangerously-skip-permissions"
+clrdh="claude -r --model haiku --dangerously-skip-permissions"
 
 function clmcpgh() {
     local github_pat=$1
