@@ -17,6 +17,7 @@ alias gdf="git status -s | fzf -m | awk '{print \$2}' | xargs git diff"
 alias gwcd=git_worktree_change_directory
 alias gwrm=git_worktree_remove_fzf
 alias gwopen=git_worktree_open_claude
+alias gprco=git_pr_checkout
 
 function git_worktree_change_directory() {
     local worktree=$(git worktree list | tail -n +2 | fzf --height 40% --reverse --prompt "Select worktree> " | awk '{print $1}')
@@ -40,6 +41,19 @@ function git_worktree_open_claude() {
 
     if [ -n "$worktree" ]; then
         cd "$worktree" && claude -c
+    fi
+}
+
+function git_pr_checkout() {
+    local pr=$(gh pr list --search "review-requested:@me" --json number,title,headRefName --template '{{range .}}#{{.number}}{{"\t"}}{{.title}}{{"\t"}}{{.headRefName}}{{"\n"}}{{end}}' | fzf --height 40% --reverse --prompt "Select PR> ")
+
+    if [ -n "$pr" ]; then
+        local branch=$(echo "$pr" | awk -F'\t' '{print $3}')
+
+        if [ -n "$branch" ]; then
+            echo "Fetching and checking out branch: $branch"
+            git fetch origin "$branch" && git checkout "$branch"
+        fi
     fi
 }
 
