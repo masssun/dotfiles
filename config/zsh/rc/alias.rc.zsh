@@ -270,3 +270,19 @@ alias culog="container-use log"
 alias cut="container-use terminal"
 alias cuw="container-use watch"
 alias cuv="container-use version"
+
+# Marp
+function marp_server() {
+    npx @marp-team/marp-cli ${1:-.} --server --watch --html
+}
+
+function marp_pdf() {
+    if [ -n "$2" ]; then
+        npx @marp-team/marp-cli "$1" --pdf --html --allow-local-files --output "$2"
+    else
+        local input_file="$1"
+        local basename=$(basename "$input_file" | sed 's/\.[^.]*$//')
+        local output_file="$HOME/Downloads/${basename}.pdf"
+        npx @marp-team/marp-cli "$input_file" --pdf --html --allow-local-files --output "$output_file"
+    fi
+}
